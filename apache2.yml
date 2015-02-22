@@ -1,0 +1,17 @@
+---
+- hosts: web
+  tasks:
+   - name: Update Cache and Upgrade Pkgs
+     apt: upgrade=dist update_cache=yes 
+   - name: Install Apache2
+     apt: pkg=apache2 state=installed update_cache=true
+     notify:
+     - Start Apache2
+   - name: make sure apache is running
+     service: name=apache2 state=started
+   - name: Upload try.html
+     copy: src=static_files/try.html dest=/var/www/html/ mode=0644
+
+  handlers:
+   - name: Start Apache2
+     service: name=apache2 state=started
