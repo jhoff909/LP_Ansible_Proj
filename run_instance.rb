@@ -52,6 +52,7 @@ hosts.close
 `nc -z -w 10 #{public_dns_name} 22`
 while $?.to_i != 0 do
   puts "waiting for #{public_dns_name} to be reachable"
+  sleep 30
   `nc -z -w 30 #{public_dns_name} 22`
 end
 
